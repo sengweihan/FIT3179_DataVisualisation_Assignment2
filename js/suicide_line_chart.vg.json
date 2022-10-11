@@ -1,0 +1,75 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 650,
+  "height": 400,
+  "background": "black",
+  "transform": [{ "filter": "datum.year < 2016" }],
+  "data": {
+    "url": "https://raw.githubusercontent.com/sengweihan/FIT3179_DataVisualisation_Assignment2/main/data/cleaned_age_suicide.csv"
+  },
+  "mark": {
+    "type": "line",
+    "point": {
+      "filled": true,
+      "size": 100
+    }
+  },
+  "params": [
+    {
+      "name": "age_highlight",
+      "select": { "type": "point", "fields": ["age"] },
+      "bind": "legend"
+    }
+  ],
+  "encoding": {
+    "x": { "field": "year", "title": "Year" },
+    "y": {
+      "field": "suicides_no",
+      "type": "quantitative",
+      "title": "Suicide Cases",
+      "axis": { "format": "s" }
+    },
+    "color": {
+      "field": "age",
+      "type": "nominal",
+      "title": "Age",
+      "scale": {
+        "range": [
+          "#c09a24",
+          "#739bf2",
+          "#383a5e",
+          "#7a51d0",
+          "#db9de2",
+          "#861440"
+        ]
+      },
+      "legend": {
+        "orient": "bottom"
+      }
+    },
+    "tooltip": [
+      { "field": "year", "type": "ordinal", "title": "Year" },
+      { "field": "age", "type": "nominal", "title": "Age" },
+      {
+        "field": "suicides_no",
+        "type": "quantitative",
+        "format": ",",
+        "title": "Suicide Cases"
+      }
+    ],
+    "opacity": {
+      "condition": { "param": "age_highlight", "value": 1 },
+      "value": 0.1
+    }
+  },
+  "config": {
+    "view": { "stroke": null },
+    "axis": { "grid": false, "titleColor": "white", "labelColor": "aliceblue" },
+    "legend": {
+      "labelColor": "aliceblue",
+      "titleColor": "white",
+      "labelFontSize": 13,
+      "titleFontSize": 13
+    }
+  }
+}

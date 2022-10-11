@@ -1,0 +1,208 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 850,
+  "height": 400,
+  "background": "black",
+  "projection": {
+    "type": "equalEarth",
+    "scale": { "expr": "zooming" },
+    "center": { "expr": "centering" }
+  },
+
+  "params": [
+    {
+      "name": "zooming",
+      "value": 150,
+      "bind": {
+        "input": "range",
+        "min": 150,
+        "max": 300,
+        "step": 5,
+        "name": "Zoom: "
+      }
+    },
+    {
+      "name": "centering",
+      "value": [0, 0],
+      "bind": {
+        "input": "select",
+        "options": [
+          [0, 0],
+          [-64, -38],
+          [134, -25],
+          [-106, 56],
+          [-52, -14],
+          [105, 62],
+          [138, 36],
+          [-78, -1.8],
+          [23, -30]
+        ],
+        "labels": [
+          "Default",
+          "Argentina",
+          "Australia",
+          "Canada",
+          "Brazil",
+          "Russia",
+          "Japan",
+          "Ecuador",
+          "South Africa"
+        ],
+        "name": "Map Centre: "
+      }
+    }
+  ],
+
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/sengweihan/FIT3179_Week9_HW/main/data/ne_110m_admin_0_countries.json",
+        "format": { "type": "topojson", "feature": "ne_110m_admin_0_countries" }
+      },
+      "mark": { "type": "geoshape", "fill": "darkgray", "stroke": "white" }
+    },
+
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/sengweihan/FIT3179_Week9_HW/main/data/ne_110m_admin_0_countries.json",
+        "format": { "type": "topojson", "feature": "ne_110m_admin_0_countries" }
+      },
+      "transform": [
+        {
+          "lookup": "properties.NAME",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/sengweihan/FIT3179_DataVisualisation_Assignment2/main/data/cleaned_map_suicide.csv"
+            },
+            "key": "country",
+            "fields": ["suicides_no", "population"]
+          }
+        },
+        {
+          "calculate": "datum.suicides_no /datum.population * 100000",
+          "as": "Suicide cases per 100,000 population"
+        }
+      ],
+      "params": [
+        {
+          "name": "highlight",
+          "select": { "type": "point", "toggle": "false", "on": "mouseover" }
+        }
+      ],
+      "mark": { "type": "geoshape", "stroke": "white" },
+      "encoding": {
+        "color": {
+          "field": "Suicide cases per 100,000 population",
+          "type": "quantitative",
+          "scale": {
+            "type": "threshold",
+            "domain": [5, 15, 30, 35],
+            "range": ["#ffc100", "#ff9a00", "#ff7400", "#ff4d00", "#ff0000"]
+          },
+          "legend": {
+            "direction": "vertical",
+            "orient": "bottom-left"
+          }
+        },
+        "stroke": {
+          "condition": {
+            "test": { "param": "highlight", "empty": false },
+            "value": "red"
+          }
+        },
+        "tooltip": [
+          { "field": "properties.NAME", "type": "nominal", "title": "Country" },
+          {
+            "field": "suicides_no",
+            "type": "quantitative",
+            "title": "Suicide cases",
+            "format": ","
+          },
+          {
+            "field": "population",
+            "type": "quantitative",
+            "title": "Population",
+            "format": ","
+          },
+          {
+            "field": "Suicide cases per 100,000 population",
+            "type": "quantitative",
+            "format": ".2f"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/sengweihan/test_visualisation/main/data/countries_latitude_longitude.csv"
+      },
+      "encoding": {
+        "latitude": { "field": "latitude", "type": "quantitative" },
+        "longitude": { "field": "longitude", "type": "quantitative" }
+      },
+      "layer": [
+        {
+          "mark": { "type": "text", "fontWeight": "bold" },
+          "encoding": {
+            "text": {
+              "condition": {
+                "test": "datum.name == 'Russia'",
+                "value": "Russia"
+              }
+            }
+          }
+        },
+        {
+          "mark": { "type": "text", "fontWeight": "bold" },
+          "encoding": {
+            "text": {
+              "condition": {
+                "test": "datum.name == 'Australia'",
+                "value": "Australia"
+              }
+            }
+          }
+        },
+        {
+          "mark": { "type": "text", "fontWeight": "bold" },
+          "encoding": {
+            "text": {
+              "condition": {
+                "test": "datum.name == 'Canada'",
+                "value": "Canada"
+              }
+            }
+          }
+        },
+        {
+          "mark": { "type": "text", "fontWeight": "bold" },
+          "encoding": {
+            "text": {
+              "condition": {
+                "test": "datum.name == 'United States of America'",
+                "value": "United States"
+              }
+            }
+          }
+        },
+
+        {
+          "mark": { "type": "text", "fontWeight": "bold" },
+          "encoding": {
+            "text": {
+              "condition": {
+                "test": "datum.name == 'Brazil'",
+                "value": "Brazil"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+
+  "config": {
+    "view": { "stroke": null },
+    "legend": { "labelColor": "aliceblue", "title": null }
+  }
+}

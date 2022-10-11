@@ -1,0 +1,63 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "black",
+  "width": 400,
+  "height": 400,
+  "data": {
+    "values": [
+      { "Generation": "Boomers (33.85%)", "value": 2284498 },
+      { "Generation": "Silent (26.40%)", "value": 1781744 },
+      { "Generation": "Generation X (22.71%)", "value": 1532804 },
+      { "Generation": "Millenials (9.24%)", "value": 623459 },
+      { "Generation": "G.I. Generation (7.56%)", "value": 510009 },
+      { "Generation": "Generation Z (0.24%)", "value": 15906 }
+    ]
+  },
+  "layer": [
+    {
+      "mark": { "type": "arc", "outerRadius": 180, "innerRadius": 100 },
+
+      "encoding": {
+        "tooltip": [
+          { "field": "Generation", "type": "nominal" },
+          {
+            "field": "value",
+            "type": "quantitative",
+            "title": "Suicide Cases",
+            "format": ","
+          }
+        ]
+      }
+    },
+    {
+      "mark": { "type": "text", "radius": 230, "fontSize": 13 },
+      "encoding": {
+        "text": { "field": "Generation", "type": "nominal" }
+      }
+    }
+  ],
+
+  "encoding": {
+    "theta": { "field": "value", "type": "quantitative", "stack": true },
+    "color": {
+      "field": "Generation",
+      "type": "nominal",
+      "scale": {
+        "range": [
+          "#0092cc",
+          "#DCD427",
+          "#ff55ff",
+          "#62BD69",
+          "#F58216",
+          "#7c4d79"
+        ]
+      },
+      "legend": null
+    }
+  },
+  "config": {
+    "view": { "stroke": null },
+    "axis": { "grid": false, "titleColor": "white", "labelColor": "aliceblue" },
+    "legend": { "labelColor": "aliceblue", "titleColor": "white" }
+  }
+}

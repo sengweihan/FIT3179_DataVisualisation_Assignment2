@@ -1,0 +1,51 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/sengweihan/FIT3179_DataVisualisation_Assignment2/main/data/cleaned_gender_suicide.csv"
+  },
+  "mark": "bar",
+  "width": 730,
+  "height": 400,
+  "background": "black",
+  "params": [
+    {
+      "name": "gender_highlight",
+      "select": { "type": "point", "fields": ["sex"] },
+      "bind": "legend"
+    }
+  ],
+  "encoding": {
+    "y": {
+      "aggregate": "sum",
+      "field": "suicides_no",
+      "title": "Suicide Cases",
+      "axis": { "format": "s" }
+    },
+    "x": { "field": "year", "type": "ordinal", "title": "Year" },
+    "color": {
+      "field": "sex",
+      "scale": { "range": ["#AA336A", "#255eba"] },
+      "title": "Gender"
+    },
+
+    "tooltip": [
+      { "field": "sex", "type": "nominal", "title": "Gender" },
+      { "field": "year", "type": "ordinal", "title": "Year" },
+      {
+        "field": "suicides_no",
+        "type": "quantitative",
+        "title": "Suicide Cases",
+        "format": ","
+      }
+    ],
+    "opacity": {
+      "condition": { "param": "gender_highlight", "value": 1 },
+      "value": 0.2
+    }
+  },
+  "config": {
+    "view": { "stroke": null },
+    "axis": { "grid": false, "titleColor": "white", "labelColor": "aliceblue" },
+    "legend": { "labelColor": "aliceblue", "titleColor": "white" }
+  }
+}

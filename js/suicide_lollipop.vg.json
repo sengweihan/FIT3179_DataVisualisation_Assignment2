@@ -1,0 +1,139 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 550,
+  "height": 450,
+  "background": "black",
+  "data": {
+    "url": "https://raw.githubusercontent.com/sengweihan/FIT3179_DataVisualisation_Assignment2/main/data/cleaned_lollipop_suicide.csv"
+  },
+  "params": [
+    {
+      "name": "Year_Selector",
+      "value": 1990,
+      "bind": {
+        "input": "range",
+        "min": 1990,
+        "max": 2014,
+        "step": 1,
+        "name": "Year: "
+      }
+    }
+  ],
+
+  "encoding": {
+    "x": {
+      "field": "suicides_no",
+      "type": "quantitative",
+      "title": "Suicide Cases",
+      "aggregate": "sum"
+    },
+    "y": {
+      "field": "country",
+      "type": "nominal",
+      "title": null,
+      "sort": "-x"
+    }
+  },
+
+  "transform": [
+    { "filter": "datum.year == Year_Selector" },
+    {
+      "filter": "datum.country == 'Russia' || datum.country == 'United States of America' || datum.country == 'Japan' || datum.country == 'France' || datum.country == 'Ukraine' || datum.country == 'Germany' || datum.country == 'North Korea' || datum.country == 'Brazil' || datum.country == 'Poland' || datum.country == 'United Kingdom' "
+    }
+  ],
+
+  "layer": [
+    {
+      "mark": "rule",
+      "encoding": {
+        "size": { "value": 4 },
+        "color": {
+          "field": "country",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Ukraine",
+              "France",
+              "Germany",
+              "Japan",
+              "North Korea",
+              "Poland",
+              "Russia",
+              "Brazil",
+              "United Kingdom",
+              "United States of America"
+            ],
+            "range": [
+              "#8A6A2D",
+              "#FF7F0EFF",
+              "#ff55ff",
+              "#D62728FF",
+              "#9467BDFF",
+              "#652A0E",
+              "#17BECFFF",
+              "#fde725",
+              "#440154",
+              "#3D59AB"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "mark": { "type": "point", "filled": true },
+      "encoding": {
+        "color": {
+          "field": "country",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Ukraine",
+              "France",
+              "Germany",
+              "Japan",
+              "North Korea",
+              "Poland",
+              "Russia",
+              "Brazil",
+              "United Kingdom",
+              "United States of America"
+            ],
+            "range": [
+              "#8A6A2D",
+              "#FF7F0EFF",
+              "#ff55ff",
+              "#D62728FF",
+              "#9467BDFF",
+              "#652A0E",
+              "#17BECFFF",
+              "#fde725",
+              "#440154",
+              "#3D59AB"
+            ]
+          },
+          "legend": {
+            "title": "Country"
+          }
+        },
+        "size": { "value": 800 },
+        "opacity": { "value": 1 },
+        "tooltip": [
+          { "field": "country", "title": "Country", "type": "nominal" },
+          { "field": "year", "title": "Year", "type": "ordinal" },
+          {
+            "field": "suicides_no",
+            "type": "quantitative",
+            "title": "Suicide Cases",
+            "format": ","
+          }
+        ]
+      }
+    }
+  ],
+
+  "config": {
+    "view": { "stroke": null },
+    "axis": { "grid": false, "titleColor": "white", "labelColor": "white" },
+    "legend": { "labelColor": "aliceblue", "titleColor": "white" }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 350,
+  "height": 350,
+  "background": "black",
+  "title": {
+    "text": "Percentage of Suicide Cases by Regions",
+    "anchor": "middle"
+  },
+  "data": {
+    "url": "https://raw.githubusercontent.com/sengweihan/FIT3179_DataVisualisation_Assignment2/main/data/cleaned_regions_suicide.csv"
+  },
+  "params": [
+    {
+      "name": "region_highlight",
+      "select": { "type": "point", "fields": ["Regions"] },
+      "bind": "legend"
+    }
+  ],
+  "layer": [
+    {
+      "mark": { "type": "square", "size": 500 },
+      "encoding": {
+        "x": { "field": "Column", "type": "quantitative", "axis": null },
+        "y": { "field": "Row", "type": "quantitative", "axis": null },
+        "color": {
+          "field": "Regions",
+          "type": "nominal",
+          "scale": {
+            "type": "ordinal",
+            "domain": [
+              "Asia",
+              "Europe",
+              "North America",
+              "South America",
+              "Oceania"
+            ],
+            "range": ["#fde725", "#440154", "#21918c", "#3b528b", "#5ec962"]
+          },
+          "legend": {
+            "labelFont": "Roboto",
+            "labelFontSize": 15,
+            "titleFont": "Roboto",
+            "titleFontSize": 15,
+            "title": "Regions",
+            "padding": 30
+          }
+        },
+        "opacity": {
+          "condition": { "param": "region_highlight", "value": 1 },
+          "value": 0.2
+        },
+        "tooltip": [
+          { "field": "Regions", "type": "nominal" },
+          {
+            "field": "Percentage_Regions",
+            "type": "nominal",
+            "title": "Percentage of Suicide"
+          }
+        ]
+      }
+    }
+  ],
+  "config": {
+    "view": { "stroke": null },
+    "axis": { "grid": false },
+    "legend": { "labelColor": "aliceblue", "titleColor": "white" }
+  }
+}
