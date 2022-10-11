@@ -1,0 +1,65 @@
+body{
+    background-color: white;
+	
+}
+
+.vis-container{
+	width: 100%;
+  }
+
+.main_page{
+	margin: auto;
+    padding: 50px;
+    padding-top: 30px;
+	background-color: black;
+	width: 1090px;
+
+}
+
+
+#red{
+	color:red;
+	font-size: 75px;
+	text-align: center;
+}
+
+.vega-bind{
+	color: white;
+	font-size: medium;
+}
+
+
+
+p{
+	color: grey;
+	font-size: 18px;
+
+	
+}
+
+h1{
+    color: grey;
+	text-align: center;
+	position: relative;
+  	top: 25%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+	font-family: 'Roboto', sans-serif;
+	font-size: 4.5rem;
+    line-height: 4.7rem;
+    letter-spacing: 1.3rem;
+    padding-top: 3%;
+	
+
+	
+}
+
+.title_description_chart{
+	color: white;
+	text-align: center;
+	background-color: grey;
+	letter-spacing: 0.2rem;
+	font-size: 28px;
+}
+
+
